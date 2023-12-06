@@ -119,7 +119,9 @@ def part1(data):
 
 
 def part2(data):
-    """Solve part 2"""
+    """Solve part 2
+    Note, this is so slow/inefficient, I have to run the seed ranges one at a time.
+    """
     result = []
     for count, seed_number in enumerate(data["seeds"]):
         if count > 1:
@@ -127,9 +129,7 @@ def part2(data):
         if count % 2:
             continue
         else:
-            # print(seed_number, seed_number+data['seeds'][count+1])
-            # print(range(seed_number, seed_number+data['seeds'][count+1]))
-            for cur_index in range(seed_number, seed_number+data['seeds'][count+1]):
+            for cur_index in range(seed_number, seed_number + data["seeds"][count + 1]):
                 for key, value in data.items():
                     if key == "seeds":
                         continue
@@ -149,8 +149,8 @@ def part2(data):
                             )
                             break
                 result.append(cur_index)
-    return min(result)
 
+    return min(result)
 
 
 def solve(puzzle_input):
