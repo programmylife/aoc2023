@@ -119,8 +119,65 @@ def part2(data):
     for line_index, line in enumerate(data, start=0):
         is_adjacent_to_symbol = False
         current_number = []
-        # for character_index, character in enumerate(line,start=0):
-        #     if character == "*":
+        for character_index, character in enumerate(line, start=0):
+            if character == "*":
+                digit_locations = check_adjacency2(data, character_index, line_index)
+                gear_ratio = find_numbers_at_locations(data, digit_locations)
+                sum += gear_ratio
+
+    return sum
+
+
+def find_numbers_at_locations(data, digit_locations):
+    possible_gears = []
+
+    for location in digit_locations:
+        y = location[0]
+        initial_digit = data[y][location[1]]
+        left_character = data[y][location[1] - 1]
+        right_character = data[y][location[1] + 1]
+        if left_character.isdigit():
+            left_character_2 = data[y][location[1] - 2]
+        else:
+            left_character_2 = "."
+        if right_character.isdigit():
+            right_character_2 = data[y][location[1] + 2]
+        else:
+            right_character_2 = "."
+        possible_number = [
+            left_character_2,
+            left_character,
+            initial_digit,
+            right_character,
+            right_character_2,
+        ]
+        number = "".join(ch for ch in possible_number if ch.isdigit())
+        possible_gears.append(int(number))
+
+    gears = list(set(possible_gears))
+    if len(gears) == 2:
+        return gears[0] * gears[1]
+    else:
+        return 0
+
+
+def check_adjacency2(data, x, y):
+    adjacent_squares = [
+        (data[y - 1][x - 1], y - 1, x - 1),
+        (data[y - 1][x], y - 1, x),
+        (data[y - 1][x + 1], y - 1, x + 1),
+        (data[y][x - 1], y, x - 1),
+        (data[y][x + 1], y, x + 1),
+        (data[y + 1][x - 1], y + 1, x - 1),
+        (data[y + 1][x], y + 1, x),
+        (data[y + 1][x + 1], y + 1, x + 1),
+    ]
+    adjacent_digit_locations = []
+    for item in adjacent_squares:
+        if item[0].isdigit():
+            adjacent_digit_locations.append((item[1], item[2]))
+
+    return adjacent_digit_locations
 
 
 def solve(puzzle_input):
