@@ -64,7 +64,8 @@ def part1(data):
 
         list_of_hands = insert_hand_into_list(
             current_hand={"hand": hand, "hand_value": hand_value, "bid": bid},
-            list_of_hands=list_of_hands, card_value_dict=card_value_dict_part_1
+            list_of_hands=list_of_hands,
+            card_value_dict=card_value_dict_part_1,
         )
 
     result = 0
@@ -155,22 +156,22 @@ def part2(data):
         if set(card_values.values()) == set([5]):
             hand_value = five_of_a_kind_value
         elif set(card_values.values()) == set([4, 1]):
-            if 'J' in hand:
+            if "J" in hand:
                 hand_value = five_of_a_kind_value
             else:
                 hand_value = four_of_a_kind_value
         elif set(card_values.values()) == set([3, 2]):
-            if 'J' in hand:
+            if "J" in hand:
                 hand_value = five_of_a_kind_value
             else:
                 hand_value = full_house_value
         elif set(card_values.values()) == set([3, 1]):
-            if 'J' in hand:
+            if "J" in hand:
                 hand_value = four_of_a_kind_value
             else:
                 hand_value = three_of_a_kind_value
         elif sorted(card_values.values()) == [1, 2, 2]:
-            j_count = hand.count('J')
+            j_count = hand.count("J")
             if j_count == 1:
                 hand_value = full_house_value
             elif j_count == 2:
@@ -178,19 +179,20 @@ def part2(data):
             else:
                 hand_value = two_pair_value
         elif 2 in card_values.values():
-            if 'J' in hand:
+            if "J" in hand:
                 hand_value = three_of_a_kind_value
             else:
                 hand_value = one_pair_value
         else:
-            if 'J' in hand:
+            if "J" in hand:
                 hand_value = one_pair_value
             else:
                 hand_value = high_card_value
 
         list_of_hands = insert_hand_into_list(
             current_hand={"hand": hand, "hand_value": hand_value, "bid": bid},
-            list_of_hands=list_of_hands, card_value_dict=card_value_dict_part_2
+            list_of_hands=list_of_hands,
+            card_value_dict=card_value_dict_part_2,
         )
 
     result = 0
