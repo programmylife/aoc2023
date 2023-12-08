@@ -67,19 +67,6 @@ def part2(data):
     return lcm(*steps_to_finish)
 
 
-def check_all_final_elements(current_elements, step_count):
-    z_count = 0
-    for element in current_elements:
-        if element[2] != "Z":
-            return True
-        else:
-            z_count += 1
-            if z_count > 4:
-                print(current_elements, step_count)
-                breakpoint()
-    return False
-
-
 def solve(puzzle_input):
     """Solve the puzzle for the given input"""
     data = parse(puzzle_input)
