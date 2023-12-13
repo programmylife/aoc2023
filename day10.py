@@ -1,9 +1,11 @@
-# template for aoc day
-
 import pathlib
 import sys
 import re
 from contextlib import suppress
+
+from shapely.geometry import Point
+from shapely.geometry.polygon import Polygon
+
 
 def parse(puzzle_input):
     """Parse input"""
@@ -16,13 +18,16 @@ def parse(puzzle_input):
     return puzzle_by_line, start_y, start_x
 
 
+points = []
+visited = set()
+
+
 def part1(data):
     """Solve part 1"""
     puzzle, start_y, start_x = data
 
     height = len(puzzle)
     width = len(puzzle[0])
-    visited = set()
     best_distance = 0
     stack = [(start_y, start_x, 0)]
 
@@ -38,6 +43,7 @@ def part1(data):
         if (x, y) in visited:
             continue
         visited.add((x, y))
+        points.append((x, y))
 
         best_distance = max(best_distance, current_distance)
 
@@ -93,6 +99,17 @@ def get_next_positions(puzzle, stack, x, y):
 
 def part2(data):
     """Solve part 2"""
+    puzzle, _, _ = data
+    polygon = Polygon(points)
+    result = 0
+    for row in range(len(puzzle)):
+        for col in range(len(puzzle[row])):
+            if (row, col) not in visited:
+                point = Point(row, col)
+                if polygon.contains(point):
+                    result += 1
+
+    return result
 
 
 def solve(puzzle_input):
@@ -109,4 +126,3 @@ if __name__ == "__main__":
     solution1, solution2 = solve(puzzle_input)
     solutions = (solution1, solution2)
     print("\n".join(str(solution) for solution in solutions))
-
